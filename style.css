@@ -1,0 +1,27 @@
+a{
+    text-decoration: none;
+}
+
+#rouge{
+    color: red;
+}
+
+#bonjour{
+    display: block;
+}
+
+div{
+    background-color: darkgrey;
+    width: 500px;
+    height: auto;
+    text-align: center;
+    border-radius: 20px;
+}
+
+#envoi{
+    margin-top: 20px;
+}
+
+label{
+    display: block;
+}
