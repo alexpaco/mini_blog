@@ -1,5 +1,5 @@
 a{
-    text-decoration: none;
+    color: darkred;
 }
 
 #rouge{
@@ -24,4 +24,19 @@ div{
 
 label{
     display: block;
+}
+
+td{
+    width: 85%;
+    height: 50px;
+    background-color: aqua;
+}
+
+.categorie{
+    width: 100px;
+    text-align: center;
+}
+
+table{
+    background-color: black;
 }
