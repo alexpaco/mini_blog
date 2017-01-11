@@ -40,12 +40,10 @@
             <input type="submit" name="vers" value="Allez à"/>
         </form>
         
-        <form method="post" action="">
-            <textarea rows="5" cols="50" name="poste"></textarea>
-            <input type="submit" name="submit" value="poster"/>
-        </form>
+        
         
         <?php
+        $tetes = array("nbr d'articles","categorie","pseudo");
         
         
         if(isset($_POST['submit'])){
@@ -65,14 +63,31 @@
             die ('Erreur SQL '.$envoi2.'</br>'.$bdd->affected_rows);
             }
         ?>
-    <div>
+    <table>   
+    <tr>
+        <td>Dernier article</td>
+        <?php foreach ($tetes as $tete) : ?>
+                <td class="categorie"><?php echo $tete; ?></td>
+            <?php endforeach; ?>
+    </tr>
+        <tr>
         <?php
         
-            while($row = $renvoi->fetch()){?>
-                <p><?php echo $row['pseudo']. "</br>".$row['categorie']."</br>".$row['article']."</br>";?></p> 
+            while($row = $renvoi->fetch()) { ?>
+                <tr><td><?php echo $row['article']?></td><td class="categorie"><?php?></td><td class="categorie"><a href=""><?php echo $row['categorie'] ?></a></td><td class="categorie"><?php echo $row['pseudo'];?></td></tr> 
            <?php } ?>
         
-        </div>
-        
+        </tr>
+        </table>
+        <form method="post" action="">
+            <textarea rows="5" cols="50" name="poste"></textarea>
+            <input type="submit" name="submit" value="poster"/>
+            <select name="choix">
+                <option value="Animaux">Animaux</option>
+                <option value="Jeux vidéo">Jeux vidéo</option>
+                <option value=" Voiture">Voiture</option>
+                <option value="Sport">Sport</option>
+            </select>
+        </form>
     </body>
 </html>
