@@ -1,3 +1,6 @@
+<?php 
+    session_start();
+?>
 <!DOCTYPE HTML>
 <html>
     <head>
@@ -20,8 +23,7 @@
         $nom_serveur = "localhost";
         $identifiant = "root";
         $mdp = "";
-        $nom_bd = "mini_blog";
-            
+        $nom_bd = "mini_blog";   
     
     try{
         $bdd = new PDO("mysql:host=$nom_serveur; dbname=$nom_bd", $identifiant, $mdp);
@@ -38,6 +40,7 @@
                 $id = htmlspecialchars($_POST['id']);
                 $passeword = sha1($_POST['passeword']);
                 $email = htmlspecialchars($_POST['email']);
+                $_SESSION['pseudo'] = $_POST['id'];
              
              if(!empty($id) && !empty($passeword) && !empty($email)){
                 $sql = $bdd->prepare("INSERT INTO membres (pseudo, mot_de_passe, email) VALUES(?, ?, ?)");
