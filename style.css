@@ -1,4 +1,5 @@
 a{
+    text-decoration: none;
     color: darkred;
 }
 
@@ -37,6 +38,9 @@ td{
     text-align: center;
 }
 
+#centre{
+    text-align: center;
+}
 table{
     background-color: black;
 }
