@@ -1,7 +1,23 @@
 <?php 
     session_start();
 ?>
-
+<?php
+    $nom_serveur = "localhost";
+    $identifiant = "root";
+    $mdp = "";
+    $nom_bd = "mini_blog";
+            
+    
+    try{
+        $bdd = new PDO("mysql:host=$nom_serveur; dbname=$nom_bd", $identifiant, $mdp);
+        $bdd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    }
+    
+    catch (Exception $e)
+    {
+        die('Erreur : ' . $e->getMessage());
+    }
+?>
 <!DOCTYPE>
 <html>
     <head>
@@ -16,26 +32,47 @@
         </nav>
         <form method="post" action="">
             <select name="choix">
-                <option value="">Choix de la catégorie</option>
-                <option value="animaux">Animaux</option>
-                <option value="jeuxvideo">Jeux vidéo</option>
-                <option value="voiture">Voiture</option>
-                <option value="sport">Sport</option>
+                <option value="$choix">Animaux</option>
+                <option value="$choix">Jeux vidéo</option>
+                <option value="$choix">Voiture</option>
+                <option value="$choix">Sport</option>
             </select>
+            <input type="submit" name="vers" value="Allez à"/>
+        </form>
+        
+        <form method="post" action="">
             <textarea rows="5" cols="50" name="poste"></textarea>
             <input type="submit" name="submit" value="poster"/>
-        </form>    
+        </form>
+        
         <?php
-         if(isset($_POST['submit'])){
-             
-//             $article = $_POST['poste'];
-             echo $_SESSION['pseudo'];
-             echo "</br>";
-             echo $_POST['choix'];
-             echo "</br>";
-             echo $_POST['poste'];
-             
-         }
+        
+        
+        if(isset($_POST['submit'])){
+            $choix = $_POST['choix'];
+            $article = $_POST['poste'];
+
+            if(!empty($choix) && !empty($article)){
+                $envoi = $bdd->prepare ("INSERT INTO articles (pseudo, categorie, article) VALUES(?, ?, ?)");
+                $envoi -> execute(array($_SESSION['pseudo'], $choix, $article));
+            }
+        }
+        
+        $envoi2 = 'SELECT pseudo,categorie,article FROM articles ORDER BY id DESC LIMIT 0,10';
+        $renvoi = $bdd->query($envoi2);
+        
+        if($renvoi == false){
+            die ('Erreur SQL '.$envoi2.'</br>'.$bdd->affected_rows);
+            }
         ?>
+    <div>
+        <?php
+        
+            while($row = $renvoi->fetch()){?>
+                <p><?php echo $row['pseudo']. "</br>".$row['categorie']."</br>".$row['article']."</br>";?></p> 
+           <?php } ?>
+        
+        </div>
+        
     </body>
 </html>
