@@ -1,3 +1,8 @@
+body{
+    padding: 0;
+    margin: 0;
+}
+
 a{
     text-decoration: none;
     color: darkred;
@@ -11,12 +16,45 @@ a{
     display: block;
 }
 
-div{
-    background-color: darkgrey;
-    width: 500px;
-    height: auto;
+header{
+    background-color: brown;
+    height: 5%;
+}
+
+p{
     text-align: center;
+    padding: 10px;
+}
+
+article{
+    width: 100%;
+    margin: auto;
+    background-color: red;
+}
+
+#membre{
+    background-color: darkgrey;
+    width: 30%;
+    text-align: center;
+    display: inline-block;
     border-radius: 20px;
+}
+
+#choixcat{
+    width: 30%;
+    display: inline-block;
+    text-align: center;
+    background-color: darkgrey;
+    border-radius: 20px;
+}
+
+.input{
+    width: 50%;
+}
+
+#tableau{
+    margin-left: 5%;
+    margin-right: 5%;
 }
 
 #envoi{
@@ -41,6 +79,11 @@ td{
 #centre{
     text-align: center;
 }
+
 table{
     background-color: black;
+    
 }
+
+
+
