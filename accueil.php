@@ -9,7 +9,7 @@
     </head>
     <body>
         <h1>Mini blog perso</h1>
-        <div>
+        <div id="membre">
             <h3>Membre</h3>
             <form action="" method="post">
                 <label for="id">Identifiant : </label> 
