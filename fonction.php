@@ -63,9 +63,17 @@
                 $id_data = $bdd->lastInsertId();                
             }
 
-        
-            $req1 = $bdd->prepare("INSERT INTO jointure (id_art, id_cat) VALUES (?, ?)");
-            $req1 -> execute(array($id_data, $_POST['choix']));
+            $req1 = $bdd->prepare("SELECT id FROM membres WHERE pseudo = ?");
+            $req1 -> execute(array($pseudo));
+            $row3 = $req1->fetch();
+            
+            $req2 = $bdd->prepare("INSERT INTO jointure (id_art, id_cat) VALUES (?, ?)");
+            $req2 -> execute(array($id_data, $choix));
+            
+            $req3 = $bdd->prepare("INSERT INTO jointure_aut_art(id_aut, id_article) VALUES(?, ?)");
+            $req3 -> execute(array($row3['id'], $id_data));
+            
+            
         }
         
         
@@ -122,29 +130,42 @@
         $bdd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         
         $tetes = array("nbr de commentaires","categorie","pseudo");
-        
-        if(isset($_POST['affiche'])){
-            
-            $categorie = $_POST['categorie'];
-            
-            if(!empty($_POST['categorie'])){
-            $ecrit = $bdd->prepare("SELECT categorie FROM categories WHERE id = ?");
-            $ecrit -> execute(array($categorie));
-            $ligne = $ecrit->fetch();
-        }
-        
-        
-        $ecrit1 = $bdd->prepare("SELECT pseudo,categorie,article FROM articles WHERE id IN (SELECT id_art FROM jointure WHERE id_cat = ?)");
-        $ecrit1 ->execute(array($categorie));
-        
-?>
-        <table>   
+        ?>
+
+          <table>   
     <tr>
         <td id="centre">articles</td>
         <?php foreach ($tetes as $tete) : ?>
                 <td class="categorie"><?php echo $tete; ?></td>
             <?php endforeach; ?>
     </tr>
+    <?php          
+        if(isset($_POST['affiche'])){
+            
+            $categorie = $_POST['categorie'];
+            $auteur = $_POST['auteur'];
+            
+            if(!empty($categorie)){
+            $ecrit = $bdd->prepare("SELECT categorie FROM categories WHERE id = ?");
+            $ecrit -> execute(array($categorie));
+            $ligne = $ecrit->fetch();
+            
+            }
+            $ecrit1 = $bdd->prepare("SELECT pseudo,categorie,article FROM articles WHERE id IN (SELECT id_art FROM jointure WHERE id_cat = ?)");
+            $ecrit1 ->execute(array($categorie));
+            
+            if(!empty($auteur)){
+               
+                $ecrit2 = $bdd->prepare("SELECT categorie FROM categories WHERE id = ?");
+                $ecrit2 -> execute(array($categorie));
+                $ligne1 = $ecrit2->fetch();
+                
+               
+            }
+            $ecrit3 = $bdd->prepare("SELECT pseudo, categorie, article FROM articles WHERE id IN (SELECT id_article FROM jointure_aut_art WHERE id_aut = ?)");
+            $ecrit3 -> execute(array($auteur));
+            
+        ?>      
         <tr>
         <?php
             while($row2 = $ecrit1->fetch()) { ?>
@@ -152,7 +173,17 @@
            <?php } ?>
         
         </tr>
+          
+    
+        <tr>
+        <?php
+            while($row3 = $ecrit3->fetch()) { ?>
+                <tr><td><?php echo $row3['article']?></td><td class="categorie"><?php?></td><td class="categorie"><?php echo $row3['categorie'] ?></td><td class="categorie"><?php echo $row3['pseudo'];?></td></tr> 
+           <?php } ?>
+        
+        </tr>
         </table>
        <?php  }
-    
-} ?>
+    }
+     
+?>
