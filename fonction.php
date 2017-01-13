@@ -52,15 +52,19 @@
             $choix = $_POST['choix'];
             $article = $_POST['poste'];
             $pseudo = $_SESSION['pseudo'];
+            $titre = $_POST['titre'];
             if(!empty($choix) && !empty($article)){
                 
                 $req = $bdd->prepare("SELECT categorie FROM categories WHERE id = ?");
                 $req->execute(array($_POST['choix']));
                 $row1 = $req->fetch();
                 
-                $envoi = $bdd->prepare("INSERT INTO articles (pseudo, categorie, article) VALUES (?, ?, ?)");
-                $envoi -> execute(array($pseudo, $row1['categorie'], $article));
+                $envoi = $bdd->prepare("INSERT INTO articles (pseudo, categorie, titre, article) VALUES (?, ?, ?, ?)");
+                $envoi -> execute(array($pseudo, $row1['categorie'], $titre, $article));
                 $id_data = $bdd->lastInsertId();                
+            }
+            else{
+                echo 'remplir les champs';
             }
 
             $req1 = $bdd->prepare("SELECT id FROM membres WHERE pseudo = ?");
@@ -90,9 +94,9 @@
         $bdd = new PDO("mysql:host=$nom_serveur; dbname=$nom_bd", $identifiant, $mdp);
         $bdd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         
-        $tetes = array("nbr de commentaires","categorie","pseudo", "modifier");
+        $tetes = array("titre","categorie","pseudo", "modifier");
         
-        $envoi2 = 'SELECT pseudo,categorie,article FROM articles ORDER BY id DESC LIMIT 0,10';
+        $envoi2 = 'SELECT pseudo,categorie,article,titre FROM articles ORDER BY id DESC LIMIT 0,10';
         $renvoi = $bdd->query($envoi2);
         
         if($renvoi == false){
@@ -101,7 +105,7 @@
         ?>
         <table>   
     <tr>
-        <td id="centre">articles</td>
+        <td class="centre">articles</td>
         <?php foreach ($tetes as $tete) : ?>
                 <td class="categorie"><?php echo $tete; ?></td>
             <?php endforeach; ?>
@@ -110,7 +114,7 @@
         <?php
         
             while($row = $renvoi->fetch()) { ?>
-                <tr><td><?php echo $row['article']?></td><td class="categorie"><?php?></td><td class="categorie"><a href=""><?php echo $row['categorie'] ?></a></td><td class="categorie"><?php echo $row['pseudo'];?></td><td class="categorie"><form method="post" action=""><input type="submit" name="modif" value="modifier"/></form></td></tr> 
+                <tr><td><?php echo $row['article']?></td><td class="categorie"><?php echo $row['titre']?></td><td class="categorie"><?php echo $row['categorie'] ?></td><td class="categorie"><?php echo $row['pseudo'];?></td><td class="categorie"><form method="post" action=""><input type="submit" name="modif" value="modifier"/></form></td></tr> 
            <?php } ?>
         
         </tr>
@@ -130,16 +134,7 @@
         $bdd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         
         $tetes = array("nbr de commentaires","categorie","pseudo");
-        ?>
-
-          <table>   
-    <tr>
-        <td id="centre">articles</td>
-        <?php foreach ($tetes as $tete) : ?>
-                <td class="categorie"><?php echo $tete; ?></td>
-            <?php endforeach; ?>
-    </tr>
-    <?php          
+                
         if(isset($_POST['affiche'])){
             
             $categorie = $_POST['categorie'];
@@ -151,39 +146,33 @@
             $ligne = $ecrit->fetch();
             
             }
-            $ecrit1 = $bdd->prepare("SELECT pseudo,categorie,article FROM articles WHERE id IN (SELECT id_art FROM jointure WHERE id_cat = ?)");
+            $ecrit1 = $bdd->prepare("SELECT pseudo,categorie,article,titre FROM articles WHERE id IN (SELECT id_art FROM jointure WHERE id_cat = ?)");
             $ecrit1 ->execute(array($categorie));
             
             if(!empty($auteur)){
                
-                $ecrit2 = $bdd->prepare("SELECT categorie FROM categories WHERE id = ?");
-                $ecrit2 -> execute(array($categorie));
+                $ecrit2 = $bdd->prepare("SELECT pseudo FROM membres WHERE id = ?");
+                $ecrit2 -> execute(array($auteur));
                 $ligne1 = $ecrit2->fetch();
                 
                
             }
-            $ecrit3 = $bdd->prepare("SELECT pseudo, categorie, article FROM articles WHERE id IN (SELECT id_article FROM jointure_aut_art WHERE id_aut = ?)");
+            $ecrit3 = $bdd->prepare("SELECT pseudo,categorie,article,titre FROM articles WHERE id IN (SELECT id_article FROM jointure_aut_art WHERE id_aut = ?)");
             $ecrit3 -> execute(array($auteur));
             
-        ?>      
-        <tr>
-        <?php
+        
             while($row2 = $ecrit1->fetch()) { ?>
-                <tr><td><?php echo $row2['article']?></td><td class="categorie"><?php?></td><td class="categorie"><?php echo $row2['categorie'] ?></td><td class="categorie"><?php echo $row2['pseudo'];?></td></tr> 
-           <?php } ?>
+                <div><p><?php echo 'Categorie : '.$row2['categorie']?></p><h3><?php echo 'Titre : '.$row2['titre']?></h3><p class="centre"><?php echo $row2['article'] ?></p><p class="nom"><?php echo 'Auteur : '.$row2['pseudo'];?></p><hr></div> 
+           <?php }
         
-        </tr>
-          
-    
-        <tr>
-        <?php
+        
             while($row3 = $ecrit3->fetch()) { ?>
-                <tr><td><?php echo $row3['article']?></td><td class="categorie"><?php?></td><td class="categorie"><?php echo $row3['categorie'] ?></td><td class="categorie"><?php echo $row3['pseudo'];?></td></tr> 
-           <?php } ?>
-        
-        </tr>
-        </table>
-       <?php  }
+                <div><p><?php echo 'Categorie : '.$row3['categorie']?></p><h3><?php echo 'Titre : '.$row3['titre']?></h3><p class="centre"><?php echo $row3['article'] ?></p><p class="nom"><?php echo 'Auteur : '.$row3['pseudo'];?></p><hr></div> 
+           <?php }
+        }
     }
+
+
+
      
 ?>
