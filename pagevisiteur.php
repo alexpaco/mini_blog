@@ -9,34 +9,47 @@
         <meta charset="utf-8">
     </head>
     <body>
-        <header><p>Bienvenue sur mon blog</p></header>
+        <header><h2>Bienvenue sur mon blog</h2></header>
         <article>
-        
-        
-        <div id="choixcat">
-            <p>Pour voir un article veuillez en choisir une catégorie ou un auteur.</p>
-            <form method="post" action="">
-                <select class="input" name="categorie">
-                    <option>Choix catégorie</option>
-                    <option value="1">Animaux</option>
-                    <option value="2">Jeux vidéo</option>
-                    <option value="3">Voiture</option>
-                    <option value="4">Sport</option>
-                </select>
-                <select class="input" name="auteur">
-                    <option>Choix auteur</option>
-                    <option value="2">Admin</option>
-                    <option value="8">Alexandre</option>
-                </select>
-                <input type="submit" name="affiche" value="rechercher"/>
+            
+        <div id="membre">
+            <h3>Membre</h3>
+            <form action="" method="post">
+                <label for="id">Identifiant : </label> 
+                <input type="text" name="id" /></br>
+                <label for="passeword">Mot de passe : </label>
+                <input type="password" name="passeword"/></br>
+                <input id="envoi" type="submit" name="envoyer" value="Envoyer"/>
+        <?php
+            include 'fonction.php';
+            identification();
+        ?>
             </form>
         </div>
+        
          
-        <div id="tableau">
+        <div class="tableau">
         <?php
-            include'fonction.php';
             pagevisit();
         ?>
+        </div>
+        <div id="choixcat">
+        <p>Pour voir un article veuillez en choisir une catégorie ou un auteur.</p>
+        <form method="post" action="">
+            <select class="input" name="categorie">
+                <option>Choix catégorie</option>
+                <option value="1">Musique</option>
+                <option value="2">Concert</option>
+                <option value="3">Sport</option>
+                <option value="4">Jeux vidéo</option>
+            </select>
+            <select class="input" name="auteur">
+                <option>Choix auteur</option>
+                <option value="1">Admin</option>
+                <option value="2">Alexandre</option>
+            </select>
+            <input type="submit" name="affiche" value="rechercher"/>
+        </form>
         </div>
         </article>
     </body>
