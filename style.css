@@ -1,6 +1,7 @@
 body{
     padding: 0;
     margin: 0;
+    background: linear-gradient(to bottom right, #034f84 0%, #40E0D0 100%);
 }
 
 a{
@@ -13,49 +14,24 @@ a{
 }
 
 #bonjour{
-    display: block;
+    text-align: center;
 }
 
 header{
-    background-color: brown;
+    background-color: #0476c8;
     height: 5%;
 }
 
-p{
+h2{
     text-align: center;
-    padding: 10px;
-}
-
-article{
-    width: 100%;
-    margin: auto;
-    background-color: red;
-}
-
-#membre{
-    background-color: darkgrey;
-    width: 30%;
-    text-align: center;
-    display: inline-block;
-    border-radius: 20px;
-}
-
-#choixcat{
-    width: 30%;
-    display: inline-block;
-    text-align: center;
-    background-color: darkgrey;
-    border-radius: 20px;
+    padding-top: 7px;
 }
 
 .input{
     width: 50%;
 }
 
-#tableau{
-    margin-left: 5%;
-    margin-right: 5%;
-}
+
 
 #envoi{
     margin-top: 20px;
@@ -66,24 +42,76 @@ label{
 }
 
 td{
-    width: 85%;
+    width: 70%;
     height: 50px;
-    background-color: aqua;
+    border: 2px solid rgba(5, 148, 250,1);
 }
 
 .categorie{
-    width: 100px;
+    width: 90px;
     text-align: center;
 }
 
-#centre{
+.centre{
     text-align: center;
 }
 
-table{
-    background-color: black;
+article{
+    width: 100%;
+    margin: auto;
+    display: flex;
+}
+
+#membre{
+    background: rgba(169, 169, 169,0.7);
+    width: 20%;
+    height: 25%;
+    text-align: center;
+    border-radius: 20px;
+}
+
+#choixcat{
+    width: 20%;
+    height: 20%;
+    margin-left: 5%;
+    text-align: center;
+    background: rgba(169, 169, 169,0.7);
+    border-radius: 20px;
+}
+
+.tableau{
+    margin-left: 10%;
+    width: 50%;
+    background: rgba(5, 148, 250,0.4);
+    border-radius: 20px;
+}
+
+h3{
+    text-align: center;
+    text-decoration: underline;
     
 }
 
+.nom{
+    text-align: right;
+}
+
+#poste{
+    height: 35%;
+    display: inline-block;
+    background: rgba(169, 169, 169,0.7);
+    border-radius: 20px;
+}
+
+#select{
+    margin-left: 30%;
+}
+
+.ajout{
+    margin-left: 5%;
+    width: 70%;
+    background: rgba(5, 148, 250,0.4);
+    border-radius: 20px;
+}
 
 
