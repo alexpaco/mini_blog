@@ -14,17 +14,24 @@
         
         
         <div id="choixcat">
-            <p>Pour voir un article veuillez en choisir une catégorie.</p>
+            <p>Pour voir un article veuillez en choisir une catégorie ou un auteur.</p>
             <form method="post" action="">
                 <select class="input" name="categorie">
+                    <option>Choix catégorie</option>
                     <option value="1">Animaux</option>
                     <option value="2">Jeux vidéo</option>
                     <option value="3">Voiture</option>
                     <option value="4">Sport</option>
                 </select>
+                <select class="input" name="auteur">
+                    <option>Choix auteur</option>
+                    <option value="2">Admin</option>
+                    <option value="8">Alexandre</option>
+                </select>
                 <input type="submit" name="affiche" value="rechercher"/>
             </form>
         </div>
+         
         <div id="tableau">
         <?php
             include'fonction.php';
